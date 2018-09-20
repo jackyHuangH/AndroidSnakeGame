@@ -1,4 +1,4 @@
-package hzj.github.snake;
+package jacky.github.snake;
 
 import android.graphics.Color;
 

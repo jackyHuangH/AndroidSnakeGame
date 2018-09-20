@@ -1,4 +1,4 @@
-package hzj.github.ui;
+package jacky.github.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-import hzj.github.snake.GameType;
-import hzj.github.snake.SnakePanelView;
+import jacky.github.snake.GameType;
+import jacky.github.snake.SnakePanelView;
 import zhangman.github.snake.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SnakePanelView.OnEatFoodListener {

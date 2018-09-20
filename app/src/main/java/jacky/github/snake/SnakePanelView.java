@@ -1,4 +1,4 @@
-package hzj.github.snake;
+package jacky.github.snake;
 
 import android.app.AlertDialog;
 import android.content.Context;
