@@ -1,4 +1,4 @@
-package zhangman.github.snake;
+package hzj.github.snake;
 
 /**
  * 网格中的位置x,y，不是屏幕的x,y

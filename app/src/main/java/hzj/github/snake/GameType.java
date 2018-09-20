@@ -1,4 +1,4 @@
-package zhangman.github.snake;
+package hzj.github.snake;
 
 /**
  * 游戏属性分类

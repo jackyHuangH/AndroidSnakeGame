@@ -1,4 +1,4 @@
-package zhangman.github.snake;
+package hzj.github.snake;
 
 import android.graphics.Color;
 
