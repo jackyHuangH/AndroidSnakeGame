@@ -29,14 +29,21 @@ public class SnakePanelView extends View {
 
     //舞台
     private List<List<GridSquare>> mGridSquare = new ArrayList<>();
-    //存储蛇的头部位置
-    private List<GridPosition> mSnakePositions = new ArrayList<>();
 
-    private GridPosition mSnakeHeader;//蛇头部位置
-    private GridPosition mFoodPosition;//食物的位置
+    //存储蛇身
+    private List<GridPosition> mSnakePositions = new ArrayList<>();
+    //蛇头部位置
+    private GridPosition mSnakeHeader;
+    //食物的位置
+    private GridPosition mFoodPosition;
+
+    //蛇长度，默认3
     private int mSnakeLength = DEFAULT_SNAKE_LENGTH;
+    //蛇移动速度，默认5
     private long mSpeed = DEFAULT_SPEED;
+    //移动方向，默认向右
     private int mSnakeDirection = GameType.RIGHT;
+
     //标记游戏是否已结束
     private boolean mIsEndGame = false;
     //网格行列数量
@@ -168,11 +175,11 @@ public class SnakePanelView extends View {
     /**
      * 释放资源，关闭线程
      */
-    public void release(){
-        if (mThread!=null) {
-            mThread.status=mThread.STOP;
+    public void release() {
+        if (mThread != null) {
+            mThread.status = mThread.STOP;
             mThread.interrupt();
-            mThread=null;
+            mThread = null;
         }
     }
 
@@ -212,7 +219,9 @@ public class SnakePanelView extends View {
 
     //============================================================================================
 
-    //创建线程动态绘制
+    /**
+     * 创建主循环线程
+     */
     private class GameMainThread extends Thread {
 
         private final int STOP = -1;
@@ -240,7 +249,8 @@ public class SnakePanelView extends View {
                     checkCollision();
                     refreshGridSquare();
                     handleSnakeTail();
-                    postInvalidate();//重绘界面
+                    //重绘界面
+                    postInvalidate();
                     handleSpeed();
                     Log.d(TAG, "run: 我再跑啊");
                 }
@@ -282,7 +292,9 @@ public class SnakePanelView extends View {
         }
     }
 
-    //检测碰撞
+    /**
+     * 检测碰撞
+     */
     private void checkCollision() {
         //检测是否咬到自己，即判断最后的位置是否与已经过的位置重复
         GridPosition headerPosition = mSnakePositions.get(mSnakePositions.size() - 1);
@@ -371,13 +383,16 @@ public class SnakePanelView extends View {
         mThread.start();
     }
 
-    //生成food
+    /**
+     * 生成food
+     */
     private void generateFood() {
         Random random = new Random();
         int foodX = random.nextInt(mGridSize - 1);
         int foodY = random.nextInt(mGridSize - 1);
         for (int i = 0; i < mSnakePositions.size() - 1; i++) {
-            if (foodX == mSnakePositions.get(i).getX() && foodY == mSnakePositions.get(i).getY()) {
+            if (foodX == mSnakePositions.get(i).getX() &&
+                    foodY == mSnakePositions.get(i).getY()) {
                 //不能生成在蛇身上
                 foodX = random.nextInt(mGridSize - 1);
                 foodY = random.nextInt(mGridSize - 1);
@@ -398,7 +413,8 @@ public class SnakePanelView extends View {
     private void moveSnake(int snakeDirection) {
         switch (snakeDirection) {
             case GameType.LEFT:
-                if (mSnakeHeader.getX() - 1 < 0) {//边界判断：如果到了最左边 让他穿过屏幕到最右边
+                //边界判断：如果到了最左边 让他穿过屏幕到最右边
+                if (mSnakeHeader.getX() - 1 < 0) {
                     mSnakeHeader.setX(mGridSize - 1);
                 } else {
                     mSnakeHeader.setX(mSnakeHeader.getX() - 1);
@@ -428,6 +444,8 @@ public class SnakePanelView extends View {
                     mSnakeHeader.setY(mSnakeHeader.getY() + 1);
                 }
                 mSnakePositions.add(new GridPosition(mSnakeHeader.getX(), mSnakeHeader.getY()));
+                break;
+            default:
                 break;
         }
     }
